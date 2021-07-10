@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import ClientLi from '../components/clientLi';
 import '../css/ClientList.css';
@@ -47,9 +48,11 @@ function ClientList() {
     <div className="client-list-container">
       <header>
         <h1>Clientes</h1>
-        <Button>
-          Novo cliente
-        </Button>
+        <Link to="/clients/add-client">
+          <Button>
+            Novo cliente
+          </Button>
+        </Link>
       </header>
       <hr/>
       <section className="filter-container">

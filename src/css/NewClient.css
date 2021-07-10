@@ -1,0 +1,8 @@
+.new-client-container {
+  background-color: #fff;
+  border: 7px solid #4a6699;
+  border-radius: 10px;
+  margin: auto;
+  max-width: 800px;
+  padding: 10px;
+}
