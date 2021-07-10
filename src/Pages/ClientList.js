@@ -8,10 +8,40 @@ import { fetchGetClients } from '../services/fetchClients';
 
 function ClientList() {
   const [clients, setClients] = useState([])
+  const [clientsFilter, setClientsFilter] = useState([])
+  const [textFilter, setTextFilter] = useState('');
+  const [status, setStatus] = useState('ativo');
 
   useEffect(() => {
-    fetchGetClients().then((response) => setClients(response))
+    fetchGetClients().then((response) => { 
+      setClients(response)
+      setClientsFilter(response)
+    })
   }, [])
+
+  const setFilter = ({ target: { value } }) => {
+    setTextFilter(value)
+    const filtred = clients
+      .filter((client) => client.name.toLowerCase().includes(value.toLowerCase()) || client.cpf_cnpj.includes(value))
+      .filter((client) => {
+        if(status === 'todos') return true
+        return client.status === value
+      })
+
+    setClientsFilter(filtred);
+  }
+
+  const handleStatus = ({ target: { value } }) => {
+    setStatus(value);
+    const filtred = clients
+      .filter((client) => client.name.toLowerCase().includes(textFilter.toLowerCase()) || client.cpf_cnpj.includes(textFilter))
+      .filter((client) => {
+        if(value === 'todos') return true
+        return client.status === value
+      })
+
+    setClientsFilter(filtred);
+  }
 
   return (
     <div className="client-list-container">
@@ -25,9 +55,9 @@ function ClientList() {
       <section className="filter-container">
         <div>
           <span>Filtra por:&nbsp;</span>
-          <input type='text' placeholder="nome, CPF/CNPJ ou CEP"/>
+          <input type='text' placeholder="nome, CPF/CNPJ ou CEP" onInput={ setFilter }/>
         </div>
-        <div className="status-container">
+        <div className="status-container" onChange={ handleStatus }>
           <span>status:&nbsp;</span>
           <label htmlFor="radio-ativo" >
             <input id="radio-ativo" type="radio" value="ativo" name="entity"/>
@@ -46,8 +76,8 @@ function ClientList() {
       <hr/>
       <ul>
         {/* { clients.map((client, index) => <ClientLi client={ client } key={ `key-${index}` } />) } */}
-        { (clients) &&
-          clients.map((client, index) => <ClientLi client={ client } key={ `key-${index}` } />)
+        { (clientsFilter) &&
+          clientsFilter.map((client, index) => <ClientLi client={ client } key={ `key-${index}` } />)
         }
       </ul>
     </div>
