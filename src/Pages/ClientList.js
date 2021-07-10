@@ -16,7 +16,7 @@ function ClientList() {
   useEffect(() => {
     fetchGetClients().then((response) => { 
       setClients(response)
-      setClientsFilter(response)
+      setClientsFilter(response.filter((resp) => resp.status === 'ativo'))
     })
   }, [])
 
@@ -63,7 +63,7 @@ function ClientList() {
         <div className="status-container" onChange={ handleStatus }>
           <span>status:&nbsp;</span>
           <label htmlFor="radio-ativo" >
-            <input id="radio-ativo" type="radio" value="ativo" name="entity"/>
+            <input id="radio-ativo" type="radio" value="ativo" name="entity" defaultChecked/>
             &nbsp;&nbsp;Ativo
           </label>
           <label>

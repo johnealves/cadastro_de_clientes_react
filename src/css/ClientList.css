@@ -25,6 +25,10 @@
   color: #fff;
 }
 
+.status-inativo {
+  color:rgb(163, 153, 153)
+}
+
 .filter-container {
   display: flex;
 }

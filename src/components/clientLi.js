@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const ClientLi = ({ client }) => {
   return (
     <Link to={`/client/${client.clientId}`}>
-      <li>{ client.name }</li>
+      <li className={`status-${client.status}`}>{ client.name }</li>
     </Link>
   )
 }
