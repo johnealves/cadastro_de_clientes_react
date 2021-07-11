@@ -7,10 +7,12 @@ import { getClientAddressById, getClientById } from '../services/fetchClients';
 import '../css/ClientHome.css';
 import AddressItem from '../components/AddressItem';
 import Button from 'react-bootstrap/Button';
+import NavBar from '../components/navBar';
 
-function ClientHome({ match: { params: { clientId } } }) {
+function ClientHome({ history, match: { params: { clientId } } }) {
   const [client, setClient] = useState([]);
   const [address, setAddress] = useState([]);
+  console.log(history)
 
   useEffect(() => {
     getClientById(clientId).then((response) => setClient(response))
@@ -20,6 +22,7 @@ function ClientHome({ match: { params: { clientId } } }) {
   return (
     <div className="client-container">
       <div>
+        <NavBar />
         <header>
           <div>
             <h4>{ client.name }</h4>

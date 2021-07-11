@@ -8,8 +8,11 @@ import '../css/ClientList.css';
 import { fetchGetClients } from '../services/fetchClients';
 import useClients from '../services/clientsJoinAddress';
 import clientsJoinAddress from '../services/clientsJoinAddress';
+import Loading from '../components/Loading';
+import NavBar from '../components/navBar';
 
 function ClientList() {
+  const [isFetching, setIsFetching] = useState(true)
   const [clients, setClients] = useState([])
   const [clientsFilter, setClientsFilter] = useState([])
   const [textFilter, setTextFilter] = useState('');
@@ -19,6 +22,7 @@ function ClientList() {
     clientsJoinAddress().then((response) =>{
       setClients(response)
       setClientsFilter(response.filter((resp) => resp.status === 'ativo'))
+      setIsFetching(false)
     })
     // fetchGetClients().then((response) => { 
     // })
@@ -54,10 +58,17 @@ function ClientList() {
     setClientsFilter(filtred);
   }
 
+  // if (isFetching) return (
+  //   <div className="client-list-container">
+  //     <Loading />
+  //   </div>
+  //   )
+
   return (
     <div className="client-list-container">
+      <NavBar />
       <header>
-        <h1>Clientes</h1>
+        <h1>Clientes cadastrados</h1>
         <Link to="/clients/add-client">
           <Button>
             Novo cliente
@@ -88,9 +99,14 @@ function ClientList() {
       </section>
       <hr/>
       <ul>
-        {/* { clients.map((client, index) => <ClientLi client={ client } key={ `key-${index}` } />) } */}
-        { (clientsFilter) &&
-          clientsFilter.map((client, index) => <ClientLi client={ client } key={ `key-${index}` } />)
+        <li className="indice-list">
+          <span>Id
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          Nome</span>
+        </li>
+        { (clientsFilter && !isFetching)
+          ? clientsFilter.map((client, index) => <ClientLi client={ client } key={ `key-${index}` } />)
+          : <Loading />
         }
       </ul>
     </div>

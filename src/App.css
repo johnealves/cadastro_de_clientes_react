@@ -7,7 +7,7 @@
 }
 
 body, html {
-  background-color: rgb(204, 211, 245);
+  background-color: rgb(158, 170, 226);
 }
 
 input {
@@ -16,6 +16,7 @@ input {
   padding: 0 5px;
 }
 
-a:hover {
-  text-decoration: none;
-}
+/* li:hover {
+  color: #fff;
+  background-color: aquamarine;
+} */

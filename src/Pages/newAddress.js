@@ -78,7 +78,7 @@ function NewAddress({ match: { params: { clientId } } }) {
         <Form.Group className="mb-1">
           <Form.Label htmlFor="cpf">CEP</Form.Label>
           <Form.Control id="cpf" type="text" placeholder="Ex.: 12345-000" onInput={ handleCep } />
-      </Form.Group>
+        </Form.Group>
       </Row>
       <Button
         // type="submit"

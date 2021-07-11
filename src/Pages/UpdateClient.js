@@ -28,7 +28,7 @@ function attClient({ match: { params: { clientId } } }) {
   const submit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
-    console.log('inicia submit')
+    
     axios.put(
       `${noCors}https://gentle-inlet-87565.herokuapp.com/client/${clientId}`,
       {
