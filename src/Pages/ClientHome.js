@@ -23,7 +23,7 @@ function ClientHome({ match: { params: { clientId } } }) {
         <header>
           <div>
             <h4>{ client.name }</h4>
-            <p>idade: {moment().diff(client.birth_date, 'years')} </p>
+            <p>idade: {moment().diff(client.birth_date, 'years')} anos</p>
           </div>
           <div>
             <p>CPF/CNPJ: { client.cpf_cnpj }</p>

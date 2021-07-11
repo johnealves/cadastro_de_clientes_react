@@ -4,6 +4,7 @@ import { Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import '../css/NewAddress.css';
+import InputMaskCep from '../services/InputMaskCep';
 
 function NewAddress({ match: { params: { clientId } } }) {
   const [address, setAddress] = useState('');
@@ -76,7 +77,7 @@ function NewAddress({ match: { params: { clientId } } }) {
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="cpf">CEP</Form.Label>
-          <Form.Control id="cpf" type="text" placeholder="Ex.: 12345000" onInput={ handleCep } />
+          <Form.Control id="cpf" type="text" placeholder="Ex.: 12345-000" onInput={ handleCep } />
       </Form.Group>
       </Row>
       <Button

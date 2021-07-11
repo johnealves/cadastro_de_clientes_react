@@ -27,12 +27,15 @@ function ClientList() {
   const setFilter = ({ target: { value } }) => {
     setTextFilter(value)
     const filtred = clients
-      .filter((client) => client.name.toLowerCase().includes(value.toLowerCase()) || client.cpf_cnpj.includes(value) || client.address.filter((cep) => cep.includes(value)))
+      .filter(({name, cpf_cnpj, address}) => {
+        const cep = address.filter((cep) => cep.includes(value));
+        if (cep.length || name.toLowerCase().includes(value.toLowerCase()) || cpf_cnpj.includes(value)) return true
+        return false;
+      })
       .filter((client) => {
           if(status === 'todos') return true
           return client.status === status
-        })
-      .filter(({ address }) => console.log(address.filter((cep) => cep.includes(value))));
+      })
     
       
       setClientsFilter(filtred);

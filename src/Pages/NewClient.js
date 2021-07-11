@@ -47,7 +47,7 @@ function NewClient() {
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="checkout-birth">Data de nascimento: </Form.Label>
-          <Form.Control id="checkout-birth" type="text" placeholder="Ex.: 01/01/2001" onInput={ handleBirthDate }/>
+          <Form.Control id="checkout-birth" type="date" placeholder="Ex.: 01/01/2001" onInput={ handleBirthDate }/>
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="checkout-cpf">CPF/CNPJ</Form.Label>
