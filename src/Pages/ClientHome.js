@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -18,22 +19,27 @@ function ClientHome({ match: { params: { clientId } } }) {
 
   return (
     <div className="client-container">
-      <header>
-        <div>
-          <h4>{ client.name }</h4>
-          <p>idade: {moment().diff(client.birth_date, 'years')} </p>
-        </div>
-        <div>
-          <p>CPF/CNPJ: { client.cpf_cnpj }</p>
-          <p>cadastrado em: <Moment format="DD/MM/YYYY">{client.register}</Moment></p>
-        </div>
-      </header>
+      <div>
+        <header>
+          <div>
+            <h4>{ client.name }</h4>
+            <p>idade: {moment().diff(client.birth_date, 'years')} </p>
+          </div>
+          <div>
+            <p>CPF/CNPJ: { client.cpf_cnpj }</p>
+            <p>cadastrado em: <Moment format="DD/MM/YYYY">{client.register}</Moment></p>
+          </div>
+        </header>
+      <Link to={`/client/${client.clientId}/update`} >Atualizar dados</Link>
+      </div>
       <hr/>
       <section>
         <h6>Endereços cadastrados</h6>
-        <Button size="sm">
-          Novo endereço
-        </Button>
+        <Link to={ `/client/${clientId}/add-address` } >
+          <Button size="sm" >
+            Novo endereço
+          </Button>
+        </Link>
       </section>
       <hr/>
       <section className="address-list-container">

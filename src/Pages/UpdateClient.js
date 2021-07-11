@@ -1,11 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import '../css/NewClient.css';
+import { getClientById } from '../services/fetchClients';
 
-function NewClient() {
+function attClient({ match: { params: { clientId } } }) {
+  const [client, setClient] = useState([]);
+
+  useEffect(() => {
+    getClientById(clientId).then((response) => setClient(response))
+  }, []);
+
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [document, setDocument] = useState('')
@@ -21,8 +29,8 @@ function NewClient() {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
     console.log('inicia submit')
-    axios.post(
-      `${noCors}https://gentle-inlet-87565.herokuapp.com/addclient`,
+    axios.put(
+      `${noCors}https://gentle-inlet-87565.herokuapp.com/client/${clientId}`,
       {
         name,
         birth_date: birthDate,
@@ -38,7 +46,7 @@ function NewClient() {
 
   return (
     <Form className="new-client-container">
-        <h4>Novo cliente</h4>
+        <h4>Atualizar dados</h4>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="checkout-fullname">
             Nome completo: 
@@ -57,7 +65,6 @@ function NewClient() {
           className="status-container"
           onChange={ handleEntity }
         >
-          {/* <span>status:&nbsp;</span> */}
           <label htmlFor="radio-ativo" >
             <input id="radio-ativo" type="radio" value="pessoa fisica" name="entity"/>
             &nbsp;&nbsp;Pessoa física
@@ -77,4 +84,4 @@ function NewClient() {
   )
 }
 
-export default NewClient;
+export default attClient;

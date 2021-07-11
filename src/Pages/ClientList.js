@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button'
 import ClientLi from '../components/clientLi';
 import '../css/ClientList.css';
 import { fetchGetClients } from '../services/fetchClients';
+import useClients from '../services/clientsJoinAddress';
+import clientsJoinAddress from '../services/clientsJoinAddress';
 
 function ClientList() {
   const [clients, setClients] = useState([])
@@ -14,23 +16,28 @@ function ClientList() {
   const [status, setStatus] = useState('ativo');
 
   useEffect(() => {
-    fetchGetClients().then((response) => { 
+    clientsJoinAddress().then((response) =>{
       setClients(response)
       setClientsFilter(response.filter((resp) => resp.status === 'ativo'))
     })
+    // fetchGetClients().then((response) => { 
+    // })
   }, [])
 
   const setFilter = ({ target: { value } }) => {
     setTextFilter(value)
     const filtred = clients
-      .filter((client) => client.name.toLowerCase().includes(value.toLowerCase()) || client.cpf_cnpj.includes(value))
+      .filter((client) => client.name.toLowerCase().includes(value.toLowerCase()) || client.cpf_cnpj.includes(value) || client.address.filter((cep) => cep.includes(value)))
       .filter((client) => {
-        if(status === 'todos') return true
-        return client.status === value
-      })
-
-    setClientsFilter(filtred);
-  }
+          if(status === 'todos') return true
+          return client.status === status
+        })
+      .filter(({ address }) => console.log(address.filter((cep) => cep.includes(value))));
+    
+      
+      setClientsFilter(filtred);
+      // console.log(client.address.map((add) => add.CEP) ))
+    }
 
   const handleStatus = ({ target: { value } }) => {
     setStatus(value);
