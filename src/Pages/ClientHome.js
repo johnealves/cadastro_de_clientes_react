@@ -4,10 +4,12 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import { getClientAddressById, getClientById } from '../services/fetchClients';
+import { RiAddCircleFill } from 'react-icons/ri';
 import '../css/ClientHome.css';
 import AddressItem from '../components/AddressItem';
 import Button from 'react-bootstrap/Button';
 import NavBar from '../components/navBar';
+import Loading from '../components/Loading';
 
 function ClientHome({ history, match: { params: { clientId } } }) {
   const [client, setClient] = useState([]);
@@ -40,6 +42,7 @@ function ClientHome({ history, match: { params: { clientId } } }) {
         <h6>Endereços cadastrados</h6>
         <Link to={ `/client/${clientId}/add-address` } >
           <Button size="sm" >
+            <RiAddCircleFill size='1rem'/>&nbsp;
             Novo endereço
           </Button>
         </Link>

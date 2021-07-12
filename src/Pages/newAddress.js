@@ -4,7 +4,8 @@ import { Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import '../css/NewAddress.css';
-import InputMaskCep from '../services/InputMaskCep';
+import InputMaskCep from '../components/InputMaskCep';
+import NavBar from '../components/navBar';
 
 function NewAddress({ match: { params: { clientId } } }) {
   const [address, setAddress] = useState('');
@@ -27,7 +28,7 @@ function NewAddress({ match: { params: { clientId } } }) {
   const onSubmit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
-    console.log('inicia submit')
+    
     axios.post(
       `${noCors}https://gentle-inlet-87565.herokuapp.com/address/${clientId}`,
       {
@@ -39,23 +40,24 @@ function NewAddress({ match: { params: { clientId } } }) {
         city,
         state,
       }
-    ).then((response) => {
+    ).then(() => {
       history.push(`/client/${ clientId }`)
     })
-
-    // addClientPost({ name, birthDate, document, entity })
   }
 
   return (
-    <Form className="new-address-container">
+    <div>
+      <Form className="new-address-container">
+      <NavBar />
+      <h2>Adicionar novo endereço</h2>
       <Form.Group className="mb-1">
         <Form.Label htmlFor="address">Endereço: </Form.Label>
-        <Form.Control id="address" type="text" placeholder="Endereço" onInput={ handleAddress } />
+        <Form.Control id="address" type="text" placeholder="Endereço" onInput={ handleAddress } required />
       </Form.Group>
       <Row className="mb-3">
         <Form.Group className="mb-1">
           <Form.Label htmlFor="number">Numero:</Form.Label>
-          <Form.Control id="number" type="text" placeholder="numero..." onInput={ handleNum } />
+          <Form.Control id="number" type="text" placeholder="numero..." onInput={ handleNum } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="complement">Complemento:</Form.Label>
@@ -63,30 +65,32 @@ function NewAddress({ match: { params: { clientId } } }) {
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="district">Bairro: </Form.Label>
-          <Form.Control id="district" type="text" placeholder="Bairro" onInput={ handleDistrict } />
+          <Form.Control id="district" type="text" placeholder="Bairro" onInput={ handleDistrict } required />
         </Form.Group>
       </Row>
       <Row className="mb-3">
         <Form.Group className="mb-1">
           <Form.Label htmlFor="city">Cidade: </Form.Label>
-          <Form.Control id="city" type="text" placeholder="Cidade" onInput={ handleCity } />
+          <Form.Control id="city" type="text" placeholder="Cidade" onInput={ handleCity } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="state">Estado: </Form.Label>
-          <Form.Control id="state" type="text" placeholder="Estado" onInput={ handleState } />
+          <Form.Control id="state" type="text" placeholder="Estado" onInput={ handleState } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="cpf">CEP</Form.Label>
-          <Form.Control id="cpf" type="text" placeholder="Ex.: 12345-000" onInput={ handleCep } />
+          <InputMaskCep onChange={ handleCep }  />
+          {/* <Form.Control id="cpf" type="text" placeholder="Ex.: 12345-000" onInput={ handleCep } required /> */}
         </Form.Group>
       </Row>
       <Button
-        // type="submit"
+        type="submit"
         variant='success'
         onClick={ onSubmit }>
-        Adicionar usuario
+        Adicionar Endereço
       </Button>
     </Form>
+    </div>
   )
 }
 

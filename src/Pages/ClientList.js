@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { RiAddCircleFill } from 'react-icons/ri';
 import Button from 'react-bootstrap/Button'
 import ClientLi from '../components/clientLi';
 import '../css/ClientList.css';
@@ -71,6 +72,7 @@ function ClientList() {
         <h1>Clientes cadastrados</h1>
         <Link to="/clients/add-client">
           <Button>
+            <RiAddCircleFill size='1rem'/>&nbsp;
             Novo cliente
           </Button>
         </Link>

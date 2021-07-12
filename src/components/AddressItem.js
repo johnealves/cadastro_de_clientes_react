@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { TiDelete } from 'react-icons/ti';
 
 function AddressItem({ add }) {
   
@@ -25,8 +26,12 @@ function AddressItem({ add }) {
       <p><span>Bairro: { add.district }</span>&nbsp;&nbsp;<span>Cidade: { add.city }</span></p>
       <p><span>{ add.state }</span>&nbsp;&nbsp;<span>CEP: { add.CEP }</span></p>
       <section>
-        <Link to={ `/client/${add.clientId}/update-address/${add.addressId}` }>editar endereço</Link>
+        <Link
+          to={{ pathname:`/client/${add.clientId}/update-address/${add.addressId}`, state: add }}>
+          editar endereço
+        </Link>
         <Button variant="danger" size="sm" onClick={ onDelete }>
+          <TiDelete size="1rem"/>&nbsp;
           excluir endereço
         </Button>
       </section>
