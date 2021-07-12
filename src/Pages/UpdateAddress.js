@@ -1,12 +1,14 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import InputMaskCep from '../components/InputMaskCep';
 import NavBar from '../components/navBar';
+import { getAddressByAddressId } from '../services/fetchClients';
+import LoadingRegistration from '../components/LoadingRegistration';
 
-function UpdateAddress({ match: { params: { clientId } } }) {
+function UpdateAddress({ match: { params: { clientId, addressId } } }) {
   const [address, setAddress] = useState('');
   const [num, setNum] = useState('');
   const [complement, setComplement] = useState('');
@@ -14,7 +16,21 @@ function UpdateAddress({ match: { params: { clientId } } }) {
   const [cep, setCep] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('')
+  const [registration, setRegistration] = useState(false)
   const history = useHistory()
+
+  useEffect(() => {
+    getAddressByAddressId(clientId)
+      .then((response) => { 
+        setAddress(response.address)
+        setNum(response.num)
+        setComplement(response.complement)
+        setDistrict(response.district)
+        setCity(response.city)
+        setState(response.state)
+        setCep(response.CEP)
+      })
+  }, []);
 
   const handleAddress = ({ target: { value } }) => { setAddress(value) }
   const handleNum = ({ target: { value } }) => { setNum(value) }
@@ -27,7 +43,8 @@ function UpdateAddress({ match: { params: { clientId } } }) {
   const onSubmit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
-    console.log('inicia submit')
+    setRegistration(true)
+
     axios.put(
       `${noCors}https://gentle-inlet-87565.herokuapp.com/address/${clientId}`,
       {
@@ -42,9 +59,9 @@ function UpdateAddress({ match: { params: { clientId } } }) {
     ).then((response) => {
       history.push(`/client/${ clientId }`)
     })
-
-    // addClientPost({ name, birthDate, document, entity })
   }
+
+  if (registration) return <div className="new-client-container"><LoadingRegistration /></div>
 
   return (
     <Form className="new-address-container">
@@ -52,35 +69,34 @@ function UpdateAddress({ match: { params: { clientId } } }) {
       <h2>Editar endereço</h2>
       <Form.Group className="mb-1">
         <Form.Label htmlFor="address">Endereço: </Form.Label>
-        <Form.Control id="address" type="text" placeholder="Endereço" onInput={ handleAddress } required />
+        <Form.Control defaultValue={ address } id="address" type="text" placeholder="Endereço" onInput={ handleAddress } required />
       </Form.Group>
       <Row className="mb-3">
         <Form.Group className="mb-1">
           <Form.Label htmlFor="number">Numero:</Form.Label>
-          <Form.Control id="number" type="text" placeholder="numero..." onInput={ handleNum } required />
+          <Form.Control id="number" defaultValue={ num } type="text" placeholder="numero..." onInput={ handleNum } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="complement">Complemento:</Form.Label>
-          <Form.Control id="complement" type="text" placeholder="complemento..." onInput={ handleComplement } />
+          <Form.Control defaultValue={ complement } id="complement" type="text" placeholder="complemento..." onInput={ handleComplement } />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="district">Bairro: </Form.Label>
-          <Form.Control id="district" type="text" placeholder="Bairro" onInput={ handleDistrict } required />
+          <Form.Control defaultValue={ district } id="district" type="text" placeholder="Bairro" onInput={ handleDistrict } required />
         </Form.Group>
       </Row>
       <Row className="mb-3">
         <Form.Group className="mb-1">
           <Form.Label htmlFor="city">Cidade: </Form.Label>
-          <Form.Control id="city" type="text" placeholder="Cidade" onInput={ handleCity } required />
+          <Form.Control id="city" defaultValue={ city } type="text" placeholder="Cidade" onInput={ handleCity } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="state">Estado: </Form.Label>
-          <Form.Control id="state" type="text" placeholder="Estado" onInput={ handleState } required />
+          <Form.Control id="state" defaultValue={ state } type="text" placeholder="Estado" onInput={ handleState } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="cpf">CEP</Form.Label>
-          <InputMaskCep onChange={ handleCep }  />
-          {/* <Form.Control id="cpf" type="text" placeholder="Ex.: 12345000" onInput={ handleCep } required /> */}
+          <InputMaskCep onChange={ handleCep } cep={ cep } />
       </Form.Group>
       </Row>
       <Button

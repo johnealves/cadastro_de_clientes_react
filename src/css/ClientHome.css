@@ -36,3 +36,9 @@
   padding: 10px;
   width: 47%;
 }
+
+@media only screen and (max-width: 720px) {
+  .address-container {
+    width: 100%;
+  }
+}

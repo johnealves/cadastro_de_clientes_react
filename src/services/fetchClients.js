@@ -22,8 +22,17 @@ const getClientAddressById = async (id) => {
   return result
 }
 
+const getAddressByAddressId = async (addressId) => {
+  const result = await fetch(`${noCors}https://gentle-inlet-87565.herokuapp.com/address/find/${addressId}`)
+    .then((response) => response.json())
+    .then((result) => result)
+    .catch((err) => console.log(err));
+  return result
+}
+
 export {
   fetchGetClients,
   getClientById,
   getClientAddressById,
+  getAddressByAddressId,
 }

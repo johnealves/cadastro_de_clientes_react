@@ -6,8 +6,8 @@ import { RiAddCircleFill } from 'react-icons/ri';
 import Button from 'react-bootstrap/Button'
 import ClientLi from '../components/clientLi';
 import '../css/ClientList.css';
-import { fetchGetClients } from '../services/fetchClients';
-import useClients from '../services/clientsJoinAddress';
+// import { fetchGetClients } from '../services/fetchClients';
+// import useClients from '../services/clientsJoinAddress';
 import clientsJoinAddress from '../services/clientsJoinAddress';
 import Loading from '../components/Loading';
 import NavBar from '../components/navBar';
@@ -25,8 +25,6 @@ function ClientList() {
       setClientsFilter(response.filter((resp) => resp.status === 'ativo'))
       setIsFetching(false)
     })
-    // fetchGetClients().then((response) => { 
-    // })
   }, [])
 
   const setFilter = ({ target: { value } }) => {
@@ -71,7 +69,7 @@ function ClientList() {
       <header>
         <h1>Clientes cadastrados</h1>
         <Link to="/clients/add-client">
-          <Button>
+          <Button size="sm">
             <RiAddCircleFill size='1rem'/>&nbsp;
             Novo cliente
           </Button>

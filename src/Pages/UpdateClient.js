@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
+import LoadingRegistration from '../components/LoadingRegistration';
 import NavBar from '../components/navBar';
 import '../css/NewClient.css';
 import { getClientById } from '../services/fetchClients';
@@ -25,6 +26,7 @@ function attClient({ match: { params: { clientId } } }) {
   const [birthDate, setBirthDate] = useState('');
   const [document, setDocument] = useState('')
   const [entity, setEntity] = useState('pessoa fisica')
+  const [registration, setRegistration] = useState(false)
   const history = useHistory();
 
   const handleName = ({ target: { value } }) => { setName(value) }
@@ -44,6 +46,7 @@ function attClient({ match: { params: { clientId } } }) {
   const submit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
+    setRegistration(true)
 
     const verification = verifyDocument();
     if (!verification) return alert('"CPF/CNPJ" invalido!,  por favor verifique os dados e tente novamente.')
@@ -60,8 +63,9 @@ function attClient({ match: { params: { clientId } } }) {
     ).then((response) => {
       history.push(`/client/${clientId}`)
     })
-    // addClientPost({ name, birthDate, document, entity })
   }
+
+  if (registration) return <div className="new-client-container"><LoadingRegistration /></div>
 
   return (
     <Form className="new-client-container">

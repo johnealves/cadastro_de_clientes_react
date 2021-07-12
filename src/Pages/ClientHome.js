@@ -14,7 +14,6 @@ import Loading from '../components/Loading';
 function ClientHome({ history, match: { params: { clientId } } }) {
   const [client, setClient] = useState([]);
   const [address, setAddress] = useState([]);
-  console.log(history)
 
   useEffect(() => {
     getClientById(clientId).then((response) => setClient(response))
@@ -49,8 +48,7 @@ function ClientHome({ history, match: { params: { clientId } } }) {
       </section>
       <hr/>
       <section className="address-list-container">
-        { (address) && address
-          .map((add, index) => <AddressItem add={ add } key={`key-${index}`} />) }
+        { (address) && address.map((add, index) => <AddressItem add={ add } key={`key-${index}`} />) }
       </section>
     </div>
   )

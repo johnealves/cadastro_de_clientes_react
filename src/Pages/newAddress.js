@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import '../css/NewAddress.css';
 import InputMaskCep from '../components/InputMaskCep';
 import NavBar from '../components/navBar';
+import LoadingRegistration from '../components/LoadingRegistration';
 
 function NewAddress({ match: { params: { clientId } } }) {
   const [address, setAddress] = useState('');
@@ -14,7 +15,8 @@ function NewAddress({ match: { params: { clientId } } }) {
   const [district, setDistrict] = useState('');
   const [cep, setCep] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('')
+  const [state, setState] = useState('');
+  const [registration, setRegistration] = useState(false)
   const history = useHistory()
 
   const handleAddress = ({ target: { value } }) => { setAddress(value) }
@@ -28,7 +30,7 @@ function NewAddress({ match: { params: { clientId } } }) {
   const onSubmit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
-    
+    setRegistration(true)
     axios.post(
       `${noCors}https://gentle-inlet-87565.herokuapp.com/address/${clientId}`,
       {
@@ -44,6 +46,8 @@ function NewAddress({ match: { params: { clientId } } }) {
       history.push(`/client/${ clientId }`)
     })
   }
+
+  if (registration) return <div className="new-client-container"><LoadingRegistration /></div>
 
   return (
     <div>
