@@ -29,13 +29,29 @@ function NewClient() {
     return true;
   }
 
+  const checkForm = () => {
+    if (
+      name === "" 
+      || birthDate === ""
+      || document === ""
+    ) {
+      alert('Campos obrigatorios não preechidos!')
+      return false
+    }
+    return true;
+  }
+
   const submit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
-    setRegistration(true)
+    
+    const completForm = checkForm()
+    if (!completForm) return null;
 
     const verification = verifyDocument();
     if (!verification) return alert('"CPF/CNPJ" invalido!,  por favor verifique os dados e tente novamente.')
+
+    setRegistration(true)
 
     axios.post(
       `${noCors}https://gentle-inlet-87565.herokuapp.com/addclient`,

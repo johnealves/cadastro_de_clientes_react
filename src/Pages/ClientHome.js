@@ -9,9 +9,8 @@ import '../css/ClientHome.css';
 import AddressItem from '../components/AddressItem';
 import Button from 'react-bootstrap/Button';
 import NavBar from '../components/navBar';
-import Loading from '../components/Loading';
 
-function ClientHome({ history, match: { params: { clientId } } }) {
+function ClientHome({ match: { params: { clientId } } }) {
   const [client, setClient] = useState([]);
   const [address, setAddress] = useState([]);
 

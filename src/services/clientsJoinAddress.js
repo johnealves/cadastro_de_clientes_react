@@ -9,7 +9,7 @@ async function clientsJoinAddress() {
   clients.forEach(async (client) => {
     const { address } = await getClientAddressById(client.clientId);
     
-    client['address'] = address.map((add) => add.CEP)
+    client['ceps'] = address.map((add) => add.cep)
   })
   
    return clients;

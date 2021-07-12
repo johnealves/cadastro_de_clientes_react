@@ -24,7 +24,7 @@ function AddressItem({ add }) {
       <p><span>Rua: { add.address }</span>&nbsp;<span>nº { add.num }</span></p>
       <p><span>complemento: { add.complement }</span></p>
       <p><span>Bairro: { add.district }</span>&nbsp;&nbsp;<span>Cidade: { add.city }</span></p>
-      <p><span>{ add.state }</span>&nbsp;&nbsp;<span>CEP: { add.CEP }</span></p>
+      <p><span>{ add.state }</span>&nbsp;&nbsp;<span>CEP: { add.cep }</span></p>
       <section>
         <Link
           to={{ pathname:`/client/${add.clientId}/update-address/${add.addressId}`, state: add }}>

@@ -28,7 +28,7 @@ function UpdateAddress({ match: { params: { clientId, addressId } } }) {
         setDistrict(response.district)
         setCity(response.city)
         setState(response.state)
-        setCep(response.CEP)
+        setCep(response.cep)
       })
   }, []);
 
@@ -40,9 +40,26 @@ function UpdateAddress({ match: { params: { clientId, addressId } } }) {
   const handleCity = ({ target: { value } }) => { setCity(value) }
   const handleState = ({ target: { value } }) => { setState(value) }
 
+  const checkForm = () => {
+    if (
+      address === "" 
+      || num === ""
+      || district === ""
+      || cep === ""
+      || city === ""
+      ||state === ""
+    ) {
+      alert('Campos obrigatorios não preechidos!')
+      return false
+    }
+    return true;
+  }
+
   const onSubmit = (e) => {
     const noCors = 'https://floating-beyond-79262.herokuapp.com/'
     e.preventDefault();
+    const completForm = checkForm()
+    if (!completForm) return null;
     setRegistration(true)
 
     axios.put(
@@ -74,11 +91,11 @@ function UpdateAddress({ match: { params: { clientId, addressId } } }) {
       <Row className="mb-3">
         <Form.Group className="mb-1">
           <Form.Label htmlFor="number">Numero:</Form.Label>
-          <Form.Control id="number" defaultValue={ num } type="text" placeholder="numero..." onInput={ handleNum } required />
+          <Form.Control id="number" defaultValue={ num } type="text" placeholder="numero" onInput={ handleNum } required />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="complement">Complemento:</Form.Label>
-          <Form.Control defaultValue={ complement } id="complement" type="text" placeholder="complemento..." onInput={ handleComplement } />
+          <Form.Control defaultValue={ complement } id="complement" type="text" placeholder="complemento(opcional)" onInput={ handleComplement } />
         </Form.Group>
         <Form.Group className="mb-1">
           <Form.Label htmlFor="district">Bairro: </Form.Label>

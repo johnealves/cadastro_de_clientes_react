@@ -30,8 +30,8 @@ function ClientList() {
   const setFilter = ({ target: { value } }) => {
     setTextFilter(value)
     const filtred = clients
-      .filter(({name, cpf_cnpj, address}) => {
-        const cep = address.filter((cep) => cep.includes(value));
+      .filter(({name, cpf_cnpj, ceps}) => {
+        const cep = ceps.filter((cep) => cep.includes(value));
         if (cep.length || name.toLowerCase().includes(value.toLowerCase()) || cpf_cnpj.includes(value)) return true
         return false;
       })
