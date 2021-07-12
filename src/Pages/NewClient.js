@@ -11,7 +11,7 @@ function NewClient() {
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [document, setDocument] = useState('')
-  const [entity, setEntity] = useState('pessoa fisica')
+  const [entity, setEntity] = useState('')
   const [registration, setRegistration] = useState(false)
   const history = useHistory();
 
@@ -22,7 +22,7 @@ function NewClient() {
 
   const verifyDocument = () => {
     const documentRegex = (
-      /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
+      /(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/
     )
     const regexTest = documentRegex.test(document);
     if (!regexTest) return false
@@ -34,6 +34,7 @@ function NewClient() {
       name === "" 
       || birthDate === ""
       || document === ""
+      || entity === ""
     ) {
       alert('Campos obrigatorios não preechidos!')
       return false
